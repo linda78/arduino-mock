@@ -1,6 +1,8 @@
 /**
  * Arduino mock header
  */
+#define MOCK_ARDUINO_DUE // to use
+
 #ifndef ARDUINO_H
 #define ARDUINO_H
 
@@ -40,6 +42,12 @@ extern "C" {
 #define FALLING 2
 #define RISING 3
 
+#ifdef MOCK_ARDUINO_DUE
+#include "variant_due.h"
+#else
+#include "variant_arduino.h"
+#endif
+
 typedef uint8_t boolean;
 typedef uint8_t byte;
 
@@ -48,7 +56,9 @@ void init(void);
 void pinMode(uint8_t, uint8_t);
 void digitalWrite(uint8_t, uint8_t);
 int digitalRead(uint8_t);
+void analogWriteResolution(int res);
 int analogRead(uint8_t);
+void analogReadResolution(int res);
 void analogReference(uint8_t mode);
 void analogWrite(uint8_t, int);
 
@@ -115,6 +125,8 @@ class ArduinoMock {
 
     MOCK_METHOD2(pinMode, void (uint8_t, uint8_t));
     MOCK_METHOD2(analogWrite, void (uint8_t, int));
+    MOCK_METHOD1(analogReadResolution, void(int));
+    MOCK_METHOD1(analogWriteResolution, void(int));
     MOCK_METHOD2(digitalWrite, void (uint8_t, uint8_t));
     MOCK_METHOD1(digitalRead, int (int));
     MOCK_METHOD1(analogRead, int (int));

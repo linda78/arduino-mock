@@ -14,11 +14,16 @@ class Wire_ {
     void begin();
     void begin(uint8_t);
     void begin(int);
+    void end();
+	  void setClock(uint32_t);
     void beginTransmission(uint8_t);
     uint8_t endTransmission(void);
     uint8_t endTransmission(uint8_t);
     uint8_t requestFrom(uint8_t, uint8_t);
     uint8_t requestFrom(uint8_t, uint8_t, uint8_t);
+    uint8_t requestFrom(uint8_t, uint8_t, uint32_t, uint8_t, uint8_t);
+	  uint8_t requestFrom(int, int);
+    uint8_t requestFrom(int, int, int);
     uint8_t write(uint8_t);
     uint8_t write(char*);
     uint8_t write(uint8_t, uint8_t);
@@ -26,6 +31,8 @@ class Wire_ {
     uint8_t read(void);
     void onReceive(uint8_t*);
     void onRequest(uint8_t*);
+    int peek(void);
+	  void flush(void);
     inline size_t write(unsigned long n) {
       return write((uint8_t)n);
     }
@@ -40,17 +47,21 @@ class Wire_ {
     }
 };
 extern Wire_ Wire;
+extern Wire_ Wire1;
 
 class WireMock {
   public:
     MOCK_METHOD0(begin, void());
     MOCK_METHOD1(begin, void(uint8_t));
     MOCK_METHOD1(begin, void(int));
+    MOCK_METHOD0(end, void(void));
+    MOCK_METHOD1(setClock, void(uint32_t));
     MOCK_METHOD1(beginTransmission, void(uint8_t));
     MOCK_METHOD0(endTransmission, uint8_t(void));
     MOCK_METHOD1(endTransmission, uint8_t(uint8_t));
     MOCK_METHOD2(requestFrom, uint8_t(uint8_t, uint8_t));
     MOCK_METHOD3(requestFrom, uint8_t(uint8_t, uint8_t, uint8_t));
+    MOCK_METHOD5(requestFrom, uint8_t(uint8_t, uint8_t, uint32_t, uint8_t, uint8_t));
     MOCK_METHOD1(write, uint8_t(uint8_t));
     MOCK_METHOD1(write, uint8_t(char*));
     MOCK_METHOD2(write, uint8_t(uint8_t, uint8_t));
@@ -58,6 +69,8 @@ class WireMock {
     MOCK_METHOD0(read, uint8_t(void));
     MOCK_METHOD1(onReceive, void(uint8_t*));
     MOCK_METHOD1(onRequest, void(uint8_t*));
+    MOCK_METHOD0(peek, int(void));
+	  MOCK_METHOD0(flush, void(void));
 };
 
 WireMock* WireMockInstance();

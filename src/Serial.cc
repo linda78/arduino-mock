@@ -50,6 +50,11 @@ template<typename T> void printBase(T num, int base) {
   std::cout << num << std::dec;
 }
 
+Serial_::operator bool() const {
+  assert(gSerialMock != NULL);
+  return gSerialMock->op_bool();
+}
+
 bool Serial_::printToCout = false;
 
 void Serial_::setPrintToCout(bool flag) {
@@ -205,6 +210,11 @@ uint8_t Serial_::begin(uint32_t port) {
   return gSerialMock->begin(port);
 }
 
+void Serial_::end() {
+  if(gSerialMock != NULL) // end is called in destructor, so possible, that serialmock is already dead
+    gSerialMock->end();
+}
+
 void Serial_::flush() {
   assert (gSerialMock != NULL);
   return gSerialMock->flush();
@@ -213,6 +223,11 @@ void Serial_::flush() {
 uint8_t Serial_::available() {
   assert (gSerialMock != NULL);
   return gSerialMock->available();
+}
+
+int Serial_::availableForWrite(){
+  assert (gSerialMock != NULL);
+  return gSerialMock->availableForWrite();
 }
 
 uint8_t Serial_::read() {

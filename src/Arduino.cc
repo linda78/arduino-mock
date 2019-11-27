@@ -28,6 +28,11 @@ void digitalWrite(uint8_t a, uint8_t b) {
   arduinoMock->digitalWrite(a, b);
 }
 
+void analogWriteResolution(int res) {
+  assert (arduinoMock != NULL);
+  arduinoMock->analogWriteResolution(res);
+}
+
 int digitalRead(uint8_t a) {
   assert (arduinoMock != NULL);
   return arduinoMock->digitalRead(a);
@@ -36,6 +41,10 @@ int digitalRead(uint8_t a) {
 int analogRead(uint8_t a) {
   assert (arduinoMock != NULL);
   return arduinoMock->analogRead(a);
+}
+
+void analogReadResolution(int res) {
+  analogRead(res);
 }
 
 void analogReference(uint8_t mode) {

@@ -218,3 +218,12 @@ TEST(serial, read2) {
   EXPECT_EQ(1, Serial.read());
   releaseSerialMock();
 }
+
+TEST(serial, bool_op) {
+  SerialMock* serialMock = serialMockInstance();
+  EXPECT_CALL(*serialMock, op_bool()).WillOnce(Return(true));
+  EXPECT_TRUE(Serial);
+  EXPECT_CALL(*serialMock, op_bool()).WillOnce(Return(false));
+  EXPECT_TRUE(!Serial);
+  releaseSerialMock();
+}

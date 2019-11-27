@@ -10,3 +10,7 @@
 #include "SPI.cc"
 
 #include "IRremote.cc"
+
+#include "USBAPI.cc"
+#include "UARTClass.cc"
+#include "USARTClass.cc"

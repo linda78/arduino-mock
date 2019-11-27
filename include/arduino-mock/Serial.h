@@ -13,7 +13,8 @@
 #define BIN 2
 
 class SerialMock {
-  public:
+public:
+    MOCK_CONST_METHOD0(op_bool, bool(void));
     MOCK_METHOD0(getWriteError, int());
     MOCK_METHOD0(clearWriteError, void());
     MOCK_METHOD1(write, size_t(uint8_t));
@@ -41,6 +42,10 @@ class SerialMock {
 
     MOCK_METHOD0(flush, void());
 
+    MOCK_METHOD2(begin, void(uint32_t, uint8_t));
+	  MOCK_METHOD0(end, void(void));
+    MOCK_METHOD0(availableForWrite, int(void));
+
     /* Not implemented yet
     MOCK_METHOD2(println, size_t(unsigned char, int));
     MOCK_METHOD2(println, size_t(unsigned int, int));
@@ -59,6 +64,7 @@ class Serial_ {
     static void setPrintToCout(bool flag);
 
   public:
+    operator bool() const;
     static size_t print(const char[]);
     static size_t print(char);
     static size_t print(unsigned char, int = DEC);
@@ -83,8 +89,11 @@ class Serial_ {
     size_t write(const uint8_t *buffer, size_t size);
 
     uint8_t begin(uint32_t);
+	  void begin(uint32_t baud_count, uint8_t config);
+	  void end();
 
     uint8_t available();
+	  int availableForWrite();
     uint8_t read();
 
     static void flush();
